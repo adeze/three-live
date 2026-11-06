@@ -532,6 +532,8 @@ async function runElementTests() {
 
   let failClosedMessage = '';
   errorEventFired = false;
+  const originalWorker = Object.getOwnPropertyDescriptor(globalThis, 'Worker');
+  Object.defineProperty(globalThis, 'Worker', {value: undefined, configurable: true});
   try {
     await instance.executeScript('const m = new THREE.Mesh();');
   } catch (error: unknown) {
@@ -555,6 +557,8 @@ async function runElementTests() {
     useCase2Message.includes('Workers are unavailable'),
     'loadScriptFromSrc (Use Case 2) routes directly to sandbox executeUrl without requiring allowClientScripts',
   );
+  if (originalWorker) Object.defineProperty(globalThis, 'Worker', originalWorker);
+  else delete (globalThis as any).Worker;
 
   // Test events dispatch
   let eventFired = false;

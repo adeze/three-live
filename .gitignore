@@ -49,6 +49,8 @@ build/
 # Xcode project and Info.plist for the iOS example, generated from project.yml by XcodeGen.
 mobile/examples/ios_swiftui/ThreeLiveDemo.xcodeproj/
 mobile/examples/ios_swiftui/Info.plist
+mobile/examples/macos_remote_immersive/ThreeLiveRemoteImmersive.xcodeproj/
+mobile/examples/macos_remote_immersive/Info.plist
 *.xcworkspace/
 .swiftpm/
 .build/

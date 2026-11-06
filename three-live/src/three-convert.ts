@@ -1812,5 +1812,5 @@ export function generateUSDZ(source: SceneOrGLBSource): Uint8Array {
  */
 export function createUSDZBlob(source: SceneOrGLBSource): Blob {
   const usdzBytes = generateUSDZ(source);
-  return new Blob([usdzBytes], {type: 'model/vnd.usdz+zip'});
+  return new Blob([Uint8Array.from(usdzBytes)], {type: 'model/vnd.usdz+zip'});
 }

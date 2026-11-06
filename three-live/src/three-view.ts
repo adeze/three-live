@@ -182,7 +182,7 @@ export function getDecoder(type: string): MeshDecoder | undefined {
 
 export function parseGLB(input: ArrayBuffer | ArrayBufferView): GLBData {
   const buffer = ArrayBuffer.isView(input)
-    ? input.buffer.slice(input.byteOffset, input.byteOffset + input.byteLength)
+    ? new Uint8Array(input.buffer, input.byteOffset, input.byteLength).slice().buffer
     : input;
   const dv = new DataView(buffer);
   if (buffer.byteLength < 12) {

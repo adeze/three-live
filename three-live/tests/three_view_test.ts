@@ -205,6 +205,18 @@ async function runThreeViewTests() {
   const parsed = parseGLB(glbBytes.buffer);
   assert(parsed.gltf !== null, 'parseGLB parses glTF JSON chunk');
   assert(parsed.bin.byteLength > 0, 'parseGLB parses binary BIN chunk');
+  const sharedView = new Uint8Array(
+    new SharedArrayBuffer(glbBytes.byteLength + 8), 4, glbBytes.byteLength,
+  );
+  sharedView.set(glbBytes);
+  const sharedParsed = parseGLB(sharedView);
+  const expectedBin = new Uint8Array(parsed.bin);
+  assert(
+    sharedParsed.bin instanceof ArrayBuffer &&
+      sharedParsed.bin.byteLength === expectedBin.byteLength &&
+      new Uint8Array(sharedParsed.bin).every((byte, index) => byte === expectedBin[index]),
+    'parseGLB copies offset shared-buffer views into an exact non-shared BIN chunk',
+  );
   assert(parsed.gltf.meshes.length === 1, 'Parsed GLB contains 1 mesh');
   assert(parsed.gltf.materials.length === 1, 'Parsed GLB contains 1 material');
   assert(parsed.gltf.nodes.length >= 1, 'Parsed GLB contains nodes');

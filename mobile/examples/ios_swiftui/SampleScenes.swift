@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#if os(iOS)
+#if os(iOS) || os(macOS)
   import Foundation
 
   public enum StudioMode: String, CaseIterable, Identifiable, Sendable {
@@ -121,7 +121,7 @@
           );
           mesh.name = "RubyTorusKnot";
           mesh.userData.interactivity = {
-            onSelect: { action: "toggleTransform", scale: [1.2, 1.2, 1.2], duration: 0.35 }
+            onSelect: { action: "toggleTransform", property: "scale", to: [1.2, 1.2, 1.2], duration: 0.35 }
           };
           scene.add(mesh);
           """,
